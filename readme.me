@@ -1,4 +1,4 @@
-Hello! Thanks for checking out job match.
+Hello! Thanks for checking out jobMatch.
 
 Installation:
 
@@ -6,6 +6,40 @@ Installation:
 - Load up Visual Studio Code or your favourite IDE
 - In your IDE terminal, path to the repo (eg: C:\Users\Brian\Documents\Projects\jobMatch)
 - Run "npm install"
-- Run "npm run start"
+- Run "npm run start" (accept tsx installation if prompted)
 - Check out the job matches!
 
+Challenges & Discussion:
+
+This was a really fun exercise - And like so many problems in programming, it appears fairly simple and then gets more complex as we go.
+
+I largely tried to document my throught process in the jobMatch.ts file.
+
+Even before that, I sat and read the requirements and thought about how I might approach a solution. Typically I'd set up a full Angular app
+with an interactive UI, but that seems like it would be overcomplicating the task.
+
+I settled on simply printing results to a terminal.
+
+Defining types, making the calls and getting data back were pretty straightforward. Obviously matching the data sets gets tricky:
+
+Right off the bat, trying to make matches based on a user submitting any text they like creates significant challenges. Suddenly 
+we cannot account for spelling errors, abbreviations, negative input ("I want a job not in London") and lots more.
+
+After tinkering a bit I eventually settled on a 'keyword' approach; break down both the bio strings and the job title strings into 
+arrays of keywords. Now I could iterate over those arrays to find matches - Hassan had the problem of writing 'design' when the job
+title includes 'designer', but the .includes method handles that. Daisy has the problem of identifying two cities, one they want
+to work in, and one they don't. 
+
+This goes back to the problems with users submitting long strings like a bio instead of choosing
+from a set of available options. In the end, I believe a good design choice is to provide more matches than fewer. 
+
+Similarly, Grace specifies London but in a negative context. They'll take anything that's not London. I'm be happy to defend my choice
+to focus on a positive, opt-in approach to identifying keywords rather than trying to parse when and how members do not want something.
+Shame that Grace will miss out on the marketing role in York, but after London they'd be too bored there. 
+
+There are lots more things that could be done to improve this very simple implementation of requirements. My main thought is around
+performance - I don't like looping over so many arrays. Sure I can loop over 5 members and then for each one loop over 8 jobs, but what about
+500,000 members and 80,000 jobs? This implementation is not scalable, but it's a proof of concept and hopefully satisfies the requirements
+from that point of view.
+
+Thank you for your time!
