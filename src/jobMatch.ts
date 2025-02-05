@@ -47,8 +47,8 @@ async function callData() {
 }
 
 // Once I have the data, pass it to my matching function and then print the results:
-function printMatches(jobs, members, cities) {
-  const results: Results[] = members.map((member) =>
+function printMatches(jobs: Job[], members: Member[], cities: string[]) {
+  const results: Results[] = members.map((member: Member) =>
     matchMembersToJobs(member, jobs, cities)
   );
   console.log(results);
