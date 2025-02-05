@@ -20,30 +20,53 @@ interface Results {
 
 // fetchJobs should be an async function that returns a promise of an array of jobs
 async function fetchJobs(): Promise<Job[]> {
-  const response = await fetch("https://bn-hiring-challenge.fly.dev/jobs.json");
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(
+      "https://bn-hiring-challenge.fly.dev/jobs.json"
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch jobs: " + response.statusText);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error in fetchJobs:", error);
+    throw error;
+  }
 }
 
 // Do the same for fetchMembers
 async function fetchMembers(): Promise<Member[]> {
-  const response = await fetch(
-    "https://bn-hiring-challenge.fly.dev/members.json"
-  );
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(
+      "https://bn-hiring-challenge.fly.dev/members.json"
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch members: " + response.statusText);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error in fetchMembers:", error);
+    throw error;
+  }
 }
 
 // To call the functions and have them print to the terminal, I have to wrap them in an async function and await the results:
 async function callData() {
-  const jobsResult = await fetchJobs();
-  const membersResult = await fetchMembers();
+  try {
+    const jobsResult = await fetchJobs();
+    const membersResult = await fetchMembers();
 
-  const jobCities = Array.from(
-    new Set(jobsResult.map((job) => job.location.toLowerCase()))
-  );
+    const jobCities = Array.from(
+      new Set(jobsResult.map((job) => job.location.toLowerCase()))
+    );
 
-  printMatches(jobsResult, membersResult, jobCities);
+    printMatches(jobsResult, membersResult, jobCities);
+  } catch (error) {
+    console.error("Error in callData:", error);
+    throw error;
+  }
 }
 
 // Once I have the data, pass it to my matching function and then print the results:
